@@ -1,0 +1,15 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start:all": "yarn start:server && yarn start:client",
+    "start:server": "yarn workspace server start",
+    "start:client": "yarn workspace client start"
+  }
+}
