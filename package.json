@@ -11,5 +11,6 @@
     "start:all": "yarn start:server && yarn start:client",
     "start:server": "yarn workspace server start",
     "start:client": "yarn workspace client start"
-  }
+  },
+  "repository": "https://github.com/Chen-Abudi/tic-tac-toe.git"
 }
