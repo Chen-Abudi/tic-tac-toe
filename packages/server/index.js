@@ -1,32 +1,39 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { Socket } = require('socket.io');
 const app = express();
 const http = require('http');
+const cors = require('cors');
 
 require('dotenv').config();
-const io = require('socket.io')(3002, {
+const socketIO = require('socket.io')(3002, {
   cors: {
-    origin: ['http://localhost:3001'],
+    origin: '*',
   },
 });
 
-const { MONGODB_URI = 'mongodb://localhost:27017/tictac', PORT = 3000 } =
+const { MONGODB_URI = 'mongodb://localhost:27017/tictac', PORT = 3001 } =
   process.env;
 mongoose.connect(MONGODB_URI);
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-io.on('connection', (socket) => {
+socketIO.on('connection', (socket) => {
   console.log(`New client connected: ${socket.id}`);
+  // socket.on('join', (userName) => {
+  //   console.log(userName);
+  //   socket.userName = userName;
+  //   console.log(userName);
 
+  //   socket.join('chat room');
+  // });
   // Handle incoming messages
   socket.on('message', (message) => {
     console.log(`Received message: ${message}`);
 
     // Broadcast message to all connected clients
 
-    socket.emit('message', message);
+    socket.emit('message', `Me: ${message}`);
+    socket.broadcast.emit('message', `Received: ${message}`);
   });
 
   // Handle disconnection
@@ -36,6 +43,7 @@ io.on('connection', (socket) => {
 });
 
 app.use(express.json());
+app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
