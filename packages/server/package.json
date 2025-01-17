@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "express": "^4.20.0",
-    "mongoose": "^8.8.3",
+    "mongoose": "^8.9.5",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
